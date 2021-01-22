@@ -12,33 +12,33 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE:
 		PostQuitMessage(69);
 		break;
-	case WM_KEYDOWN:
-		if (wParam == 'F')
-		{
-			SetWindowText(hwnd, "You pressed F, sucessfully paid respects");
-		}
-		break;
-	case WM_KEYUP:
-		if (wParam == 'F')
-		{
-			SetWindowText(hwnd, "Aether Engine");
-		}
-		break;
-	case WM_CHAR:
-		{
-			static std::string title;
-			title.push_back((char)wParam);
-			SetWindowText(hwnd, title.c_str());
-		}
-		break;
-	case WM_LBUTTONDOWN:
-		{
-			POINTS pt = MAKEPOINTS(lParam);
-			std::ostringstream oss;
-			oss << "(" << pt.x << "," << pt.y << ")";
-			SetWindowText(hwnd, oss.str().c_str());
-		}
-		break;
+	//case WM_KEYDOWN:
+	//	if (wParam == 'F')
+	//	{
+	//		SetWindowText(hwnd, "You pressed F, sucessfully paid respects");
+	//	}
+	//	break;
+	//case WM_KEYUP:
+	//	if (wParam == 'F')
+	//	{
+	//		SetWindowText(hwnd, "Aether Engine");
+	//	}
+	//	break;
+	//case WM_CHAR:
+	//	{
+	//		static std::string title;
+	//		title.push_back((char)wParam);
+	//		SetWindowText(hwnd, title.c_str());
+	//	}
+	//	break;
+	//case WM_LBUTTONDOWN:
+	//	{
+	//		POINTS pt = MAKEPOINTS(lParam);
+	//		std::ostringstream oss;
+	//		oss << "(" << pt.x << "," << pt.y << ")";
+	//		SetWindowText(hwnd, oss.str().c_str());
+	//	}
+	//	break;
 	}
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
@@ -49,26 +49,41 @@ int CALLBACK WinMain(
 	LPSTR	  lpCmdLine,
 	int		  nCmdShow)
 {	
-	Window wnd(800, 600, "Aether Engine");
-	Window wnd2(400, 300, "Aether Script Editor");
+	try
+	{
+		Window wnd(800, 600, "Aether Engine");
 
-	//Window Messages (kinda like events)
-	MSG msg;
-	BOOL gResult;
-	while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
+		//Window Messages (kinda like events)
+		MSG msg;
+		BOOL gResult;
+		while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 
-	if (gResult == -1)
-	{
-		return -1;
-	}
-	else
-	{
+		if (gResult == -1)
+		{
+			return -1;
+		}
+		else
+		{
+			return msg.wParam;
+		}
+
 		return msg.wParam;
 	}
-
-	return msg.wParam;
+	catch (const ATException& e)
+	{
+		MessageBox(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch (const std::exception& e)
+	{
+		MessageBox(nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch ( ... )
+	{
+		MessageBox(nullptr, "No details available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
+	}
+	return -1;
 }

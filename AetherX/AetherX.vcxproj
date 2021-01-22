@@ -171,14 +171,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ATException.cpp" />
     <ClCompile Include="src\WindowsMessageMap.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ATException.h" />
     <ClInclude Include="src\ATWindow.h" />
+    <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\WindowsMessageMap.h" />
     <ClInclude Include="src\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Aether.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\AetherX.aps" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\AetherX.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
